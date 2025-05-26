@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Para Samantha 🌹</title>
+<link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3533/3533783.png" />
+<style>
+  body {
+    margin: 0; padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #121212;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  .container {
+    max-width: 400px;
+    padding: 20px;
+    text-align: center;
+    border: 2px solid #a32929;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(163,41,41,0.6);
+    background: #1e1e1e;
+  }
+  h1 {
+    margin-bottom: 10px;
+    font-size: 2rem;
+  }
+  p {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+  button {
+    background: #a32929;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 12px 30px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  button:hover {
+    background: #7d1d1d;
+  }
+  .hidden {
+    display: none;
+  }
+  .buttons {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    position: static;
+    height: 60px;
+    align-items: center;
+  }
+  .btn-yes {
+    position: relative;
+    z-index: 1;
+  }
+  .btn-no {
+    background: #555;
+    color: #aaa;
+    position: fixed;
+    z-index: 9999;
+    padding: 12px 25px;
+    transition: left 0.25s ease, top 0.25s ease;
+  }
+</style>
+</head>
+<body>
+
+<div class="container" id="startScreen">
+  <h1>Hola a la niña que hace brillar mis ojos 🌹</h1>
+  <p>Presiona el botón para comenzar esta pequeña sorpresa.</p>
+  <button id="startBtn">Comenzar</button>
+</div>
+
+<div class="container hidden" id="musicNoticeScreen">
+  <h1>WAIT MOMENT PLEASE MISS</h1>
+  <p>Súbele el volumen y deléitate con esta rola DE MI PARA TII💖</p>
+  <button id="continueBtn">Continuar</button>
+</div>
+
+<div class="container hidden" id="letterScreen">
+  <h1>Para ti mi niña lindaaa</h1>
+  <p>
+    A veces la vida nos sorprende con personas que llegan sin aviso, como una brisa que acaricia el alma. <br><br>
+    Tú eres esa brisa. Suave, luminosa, y capaz de dar sentido incluso a los silencios. No sé si es el destino, pero siempre nos vuelven a unir. <br><br>
+    No quiero prometerte perfección, pero sí sinceridad, ternura, y la intención de construir algo bonito contigo. <br><br>
+    Gracias por ser parte de mi vida... y por permitir que te piense con una sonrisa.
+  </p>
+  <button id="warningBtn">Siguiente</button>
+</div>
+
+<div class="container hidden" id="warningScreen">
+  <h1>Espera, antes que nada...</h1>
+  <p>
+    Si tu respuesta es <strong>"Sí"</strong>, los chocolates son suyos<br><br>
+    si no me los devuelves, ¿eh?  tan muy caros  <br><br>
+    ¡Piénselo bien! 
+  </p>
+  <button id="nextBtn">Ok, ahora sí</button>
+</div>
+
+<div class="container hidden" id="questionScreen">
+  <h1>¿Quieres ser mi novia?</h1>
+  <div class="buttons">
+    <button class="btn-yes" id="yesBtn">Sí ❤️</button>
+    <button class="btn-no" id="noBtn">No 😢</button>
+  </div>
+</div>
+
+<div class="container hidden" id="finalScreen">
+  <h1>❤️ ¡Sabía que ibas a decir que síiiiii!</h1>
+</div>
+
+<audio id="music" loop>
+  <source src="manuelmedrano.mp3" type="audio/mpeg" />
+  Tu navegador no soporta audio HTML5.
+</audio>
+
+<script>
+  const startBtn = document.getElementById('startBtn');
+  const continueBtn = document.getElementById('continueBtn');
+  const warningBtn = document.getElementById('warningBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const startScreen = document.getElementById('startScreen');
+  const musicNoticeScreen = document.getElementById('musicNoticeScreen');
+  const letterScreen = document.getElementById('letterScreen');
+  const warningScreen = document.getElementById('warningScreen');
+  const questionScreen = document.getElementById('questionScreen');
+  const finalScreen = document.getElementById('finalScreen');
+  const music = document.getElementById('music');
+  const noBtn = document.getElementById('noBtn');
+  const yesBtn = document.getElementById('yesBtn');
+
+  startBtn.addEventListener('click', () => {
+    music.play().catch(e => console.log('Play bloqueado'));
+    startScreen.classList.add('hidden');
+    musicNoticeScreen.classList.remove('hidden');
+  });
+
+  continueBtn.addEventListener('click', () => {
+    musicNoticeScreen.classList.add('hidden');
+    letterScreen.classList.remove('hidden');
+  });
+
+  warningBtn.addEventListener('click', () => {
+    letterScreen.classList.add('hidden');
+    warningScreen.classList.remove('hidden');
+  });
+
+  nextBtn.addEventListener('click', () => {
+    warningScreen.classList.add('hidden');
+    questionScreen.classList.remove('hidden');
+  });
+
+  yesBtn.addEventListener('click', () => {
+    questionScreen.classList.add('hidden');
+    finalScreen.classList.remove('hidden');
+  });
+
+  setInterval(() => {
+    const maxX = window.innerWidth - noBtn.offsetWidth;
+    const maxY = window.innerHeight - noBtn.offsetHeight;
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+    noBtn.style.left = `${x}px`;
+    noBtn.style.top = `${y}px`;
+  }, 300);
+
+  noBtn.addEventListener('mouseover', () => {
+    const maxX = window.innerWidth - noBtn.offsetWidth;
+    const maxY = window.innerHeight - noBtn.offsetHeight;
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+    noBtn.style.left = `${x}px`;
+    noBtn.style.top = `${y}px`;
+  });
+</script>
+
+</body>
+</html>
